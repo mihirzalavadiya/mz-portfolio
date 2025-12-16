@@ -95,3 +95,175 @@ export const EXPERIENCE_DATA: ExperienceItem[] = [
     ],
   },
 ];
+
+// projects
+// src/utils/constants.ts
+
+// src/utils/constants.ts
+
+export interface ProjectItem {
+  id: number;
+  title: string;
+  category: string;
+  description: string;
+  image: string;
+  techStack: string[];
+  liveUrl: string;
+  githubUrl: string;
+  keyFeatures: string[];
+  overview: string;
+  gallery?: string[];
+}
+
+export const PROJECTS_DATA: ProjectItem[] = [
+  {
+    id: 1,
+    title: 'Namaste Tech',
+    category: 'Tech',
+    description:
+      'A learning hub providing solutions to Namaste Dev problems, technical blogs, LeetCode explanations, and frontend project ideas.',
+    image: '/projects/namaste_tech.png',
+    techStack: ['Next.js', 'JavaScript', 'Redux', 'CSS', 'Firebase'],
+    liveUrl: 'https://namaste-tech.vercel.app/',
+    githubUrl: 'https://github.com/mihirzalavadiya/namaste-tech',
+    keyFeatures: [
+      'Namaste Dev problem solutions',
+      'Technical blog posts',
+      'LeetCode explanations',
+      'Curated frontend project ideas',
+    ],
+    overview:
+      'Namaste Tech was built as a centralized platform for frontend learners to practice, learn, and grow. The project focuses on clean UI, scalable architecture, and performance using Next.js, while organizing educational content in an easy-to-navigate format.',
+    gallery: [
+      '/projects/namaste_tech_1.png',
+      '/projects/namaste_tech_2.png',
+      '/projects/namaste_tech_3.png',
+    ],
+  },
+  {
+    id: 2,
+    title: 'ShowFlix GPT',
+    category: 'Entertainment',
+    description:
+      'ShowFlix GPT is an AI-powered movie discovery app that helps users explore trending movies, get personalized recommendations, and find similar titles through intelligent search.',
+    image: '/projects/showflix_gpt.png',
+    techStack: ['React.js', 'Tailwind CSS', 'Groq AI', 'Firebase'],
+    liveUrl: 'https://show-flix-gpt.vercel.app/',
+    githubUrl: 'https://github.com/mihirzalavadiya/showflix-gpt',
+    keyFeatures: [
+      'AI-powered movie search',
+      'Personalized movie recommendations',
+      'Trending and popular movies listing',
+      'Similar movie suggestions',
+    ],
+    overview:
+      'ShowFlix GPT was built to combine modern frontend development with AI-driven experiences. The focus was on creating a fast, intuitive UI using React.js while integrating AI-based search and recommendations to enhance content discovery. The app delivers a smooth and engaging movie browsing experience across devices.',
+    gallery: [
+      '/projects/showflix_gpt_1.png',
+      '/projects/showflix_gpt_2.png',
+      '/projects/showflix_gpt_3.png',
+    ],
+  },
+  {
+    id: 3,
+    title: 'Snack Spire',
+    category: 'Food',
+    description:
+      'Snack Spire is a food discovery web application built using React.js, where I implemented and showcased almost every major React concept. The project focuses on providing a smooth user experience for browsing restaurants, exploring menus, and managing interactions, while maintaining scalable code architecture.',
+    image: '/projects/snack_spire.png',
+    techStack: ['React.js', 'JavaScript', 'CSS', 'HTML'],
+    liveUrl: 'https://snack-spire.vercel.app/',
+    githubUrl: 'https://github.com/mihirzalavadiya/first-hello-world',
+    keyFeatures: [
+      'Interactive Food Menu',
+      'Cart State Management',
+      'Responsive Grid Layout',
+      'Fast Loading Speed',
+    ],
+    overview:
+      'Snack Spire was built to master the fundamentals of React.js. The main challenge was to create a smooth, lag-free food ordering interface without using complex state management libraries like Redux initially. I focused on prop-drilling and Context API to manage the cart state efficiently. The result is a lightning-fast application that offers a seamless user experience across all devices.',
+  },
+  {
+    id: 4,
+    title: 'ViewTube',
+    category: 'Entertainment',
+    description:
+      'A YouTube-inspired video streaming platform for browsing, searching, and watching trending videos with a clean and responsive UI.',
+    image: '/projects/view_tube.png',
+    techStack: ['React.js', 'YouTube Data API', 'Tailwind CSS'],
+    liveUrl: 'https://view-tube-one.vercel.app/',
+    githubUrl: 'https://github.com/mihirzalavadiya/view-tube',
+    keyFeatures: [
+      'Video listing with thumbnails',
+      'Search functionality',
+      'Video player with recommendations',
+      'Responsive layout for all devices',
+    ],
+    overview:
+      'ViewTube was built to understand how large-scale video platforms work under the hood. The focus was on efficient data fetching, reusable components, and delivering a smooth video browsing experience using React.js and modern frontend practices.',
+    gallery: [
+      '/projects/view_tube_1.png',
+      '/projects/view_tube_2.png',
+      '/projects/view_tube_3.png',
+    ],
+  },
+  {
+    id: 5,
+    title: 'GBC (Goal Based Calculator)',
+    category: 'FinTech',
+    description:
+      'A goal-based financial planning calculator that helps users estimate returns, plan retirement goals, and visualize asset allocation.',
+    image: '/projects/gbc.png',
+    techStack: ['React.js', 'Chart.js', 'Tailwind CSS'],
+    liveUrl: 'https://gbc-ui.netlify.app/',
+    githubUrl: 'https://github.com/mihirzalavadiya/GBC',
+    keyFeatures: [
+      'Goal-based investment planning',
+      'Dynamic asset allocation visualization',
+      'Retirement and savings projections',
+      'Interactive charts and sliders',
+    ],
+    overview:
+      'GBC was built to simplify financial planning through an intuitive and data-driven interface. The focus was on real-time calculations, clean UI, and visual representation of investment goals and asset allocation to help users make informed financial decisions.',
+    gallery: ['/projects/gbc_1.png', '/projects/gbc_2.png'],
+  },
+  {
+    id: 6,
+    title: 'Typing Speed Test',
+    category: 'Utility',
+    description:
+      'A web-based typing speed test application to measure typing speed and accuracy in real time.',
+    image: '/projects/typing_speed_test.png',
+    techStack: ['HTML', 'CSS', 'JavaScript'],
+    liveUrl: 'https://masteroftype.netlify.app',
+    githubUrl: 'https://github.com/mihirzalavadiya/typing-speed-test',
+    keyFeatures: [
+      'Real-time typing speed calculation',
+      'Accuracy tracking',
+      'Timer-based test sessions',
+      'Responsive and minimal UI',
+    ],
+    overview:
+      'Typing Speed Test was built to strengthen core JavaScript fundamentals and DOM manipulation skills. The project focuses on real-time input handling, performance calculation, and delivering a smooth user experience with a clean and responsive interface.',
+    gallery: ['/projects/typing_speed_test_1.png'],
+  },
+  {
+    id: 7,
+    title: 'QR Generator',
+    category: 'Utility',
+    description:
+      'A simple web application to generate QR codes instantly for text and URLs.',
+    image: '/projects/qr_generator.png',
+    techStack: ['HTML', 'CSS', 'JavaScript'],
+    liveUrl: 'https://qrgenerat.netlify.app',
+    githubUrl: 'https://github.com/mihirzalavadiya/gegerate-qr-code',
+    keyFeatures: [
+      'Instant QR code generation',
+      'Support for text and URL inputs',
+      'Downloadable QR codes',
+      'Clean and responsive UI',
+    ],
+    overview:
+      'QR Generator was built to practice core JavaScript concepts and DOM manipulation. The focus was on creating a fast, lightweight utility with a simple user interface that allows users to generate QR codes effortlessly.',
+  },
+];

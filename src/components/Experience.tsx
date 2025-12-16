@@ -130,7 +130,7 @@ const Experience = () => {
 
                       {/* Header Info */}
                       <div className="relative z-10">
-                        <span className="inline-block px-3 py-1 mb-3 text-xs font-semibold tracking-wide text-primary border border-primary/20 rounded-full bg-primary/5">
+                        <span className="inline-block font-mono px-3 py-1 mb-3 text-xs font-semibold tracking-wide text-primary border border-primary/20 rounded-full bg-primary/5">
                           {item.period}
                         </span>
 

@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { NAV_LINKS } from '@/utils/constants';
 import StaggeredText from './StaggeredText';
@@ -10,6 +10,11 @@ import StaggeredText from './StaggeredText';
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [activeSection, setActiveSection] = useState('');
+
+  // State to track if scroll is triggered by a click
+  const [isClickScrolling, setIsClickScrolling] = useState(false);
+  const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     if (isOpen) {
@@ -26,6 +31,61 @@ const Header = () => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  // Intersection Observer Logic
+  useEffect(() => {
+    const observerOptions = {
+      root: null,
+      rootMargin: '-20% 0px -35% 0px',
+      threshold: 0.1,
+    };
+
+    const observerCallback = (entries: IntersectionObserverEntry[]) => {
+      // Check: Agar click se scroll ho raha hai, to update mat karo
+      if (isClickScrolling) return;
+
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          setActiveSection(entry.target.id);
+        }
+      });
+    };
+
+    const observer = new IntersectionObserver(
+      observerCallback,
+      observerOptions
+    );
+
+    NAV_LINKS.forEach((link) => {
+      const sectionId = link.href.replace('/#', '').replace('#', '');
+      const element = document.getElementById(sectionId);
+      if (element) observer.observe(element);
+    });
+
+    return () => observer.disconnect();
+  }, [isClickScrolling]); // Dependency added so it respects the lock
+
+  // Handle Click Function (The Fix)
+  const handleNavClick = (sectionId: string) => {
+    // 1. Menu close karo
+    setIsOpen(false);
+
+    // 2. Turant active section set karo (Instant jump for line)
+    setActiveSection(sectionId);
+
+    // 3. Observer ko LOCK kar do
+    setIsClickScrolling(true);
+
+    // 4. Purana timeout clear karo agar user jaldi click kare
+    if (scrollTimeoutRef.current) {
+      clearTimeout(scrollTimeoutRef.current);
+    }
+
+    // 5. Thodi der baad (jab scroll khatam ho jaye) Observer UNLOCK karo
+    scrollTimeoutRef.current = setTimeout(() => {
+      setIsClickScrolling(false);
+    }, 1000); // 1 second ka lock kaafi hota hai smooth scroll ke liye
+  };
 
   const toggleMenu = () => setIsOpen(!isOpen);
 
@@ -53,7 +113,6 @@ const Header = () => {
 
   return (
     <>
-      {/* 👇 Added 'motion.header' back for entrance animation */}
       <motion.header
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
@@ -80,17 +139,43 @@ const Header = () => {
 
           <nav className="hidden md:block">
             <ul className="flex items-center gap-8">
-              {NAV_LINKS.map((link) => (
-                <li key={link.label}>
-                  <Link
-                    href={link.href}
-                    className="relative font-sans text-sm font-medium text-zinc-600 transition-colors hover:text-black dark:text-zinc-400 dark:hover:text-white group"
-                  >
-                    {link.label}
-                    <span className="absolute -bottom-1 left-0 w-0 h-[2px] bg-primary transition-all duration-300 group-hover:w-full"></span>
-                  </Link>
-                </li>
-              ))}
+              {NAV_LINKS.map((link) => {
+                const sectionId = link.href.replace('/#', '').replace('#', '');
+                const isActive = activeSection === sectionId;
+
+                return (
+                  <li key={link.label}>
+                    <Link
+                      href={link.href}
+                      // 👇 Call the new handler
+                      onClick={() => handleNavClick(sectionId)}
+                      className={`relative font-sans text-sm font-medium transition-colors ${
+                        isActive
+                          ? 'text-primary'
+                          : 'text-zinc-600 hover:text-black dark:text-zinc-400 dark:hover:text-white'
+                      }`}
+                    >
+                      {link.label}
+
+                      {isActive && (
+                        <motion.span
+                          layoutId="activeSection"
+                          transition={{
+                            type: 'spring',
+                            stiffness: 380,
+                            damping: 30,
+                          }}
+                          className="absolute -bottom-1 left-0 w-full h-[2px] bg-primary rounded-full"
+                        />
+                      )}
+
+                      {!isActive && (
+                        <span className="absolute -bottom-1 left-0 w-0 h-[2px] bg-zinc-300 dark:bg-zinc-700 transition-all duration-300 group-hover:w-full"></span>
+                      )}
+                    </Link>
+                  </li>
+                );
+              })}
             </ul>
           </nav>
 
@@ -136,17 +221,31 @@ const Header = () => {
             <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px] opacity-40"></div>
 
             <nav className="flex flex-col items-center gap-8 z-10">
-              {NAV_LINKS.map((link, i) => (
-                <motion.div custom={i} variants={linkVariants} key={link.label}>
-                  <Link
-                    href={link.href}
-                    onClick={() => setIsOpen(false)}
-                    className="font-outfit text-3xl font-bold text-zinc-900 dark:text-white hover:text-primary transition-colors"
+              {NAV_LINKS.map((link, i) => {
+                const sectionId = link.href.replace('/#', '').replace('#', '');
+                const isActive = activeSection === sectionId;
+
+                return (
+                  <motion.div
+                    custom={i}
+                    variants={linkVariants}
+                    key={link.label}
                   >
-                    {link.label}
-                  </Link>
-                </motion.div>
-              ))}
+                    <Link
+                      href={link.href}
+                      // 👇 Call the new handler here too
+                      onClick={() => handleNavClick(sectionId)}
+                      className={`font-outfit text-3xl font-bold transition-colors ${
+                        isActive
+                          ? 'text-primary'
+                          : 'text-zinc-900 dark:text-white hover:text-primary'
+                      }`}
+                    >
+                      {link.label}
+                    </Link>
+                  </motion.div>
+                );
+              })}
               <motion.div custom={4} variants={linkVariants}>
                 <Link href="#contact" onClick={() => setIsOpen(false)}>
                   <button className="mt-4 rounded-full bg-primary px-10 py-4 font-outfit text-xl font-medium text-white shadow-xl shadow-primary/30 transition-transform active:scale-95">
