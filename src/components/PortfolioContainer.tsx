@@ -2,6 +2,7 @@ import React from 'react';
 import Header from './Header';
 import Hero from './Hero';
 import About from './About';
+import Experience from './Experience';
 // import Projects from './Projects';
 // import Contact from './Contact';
 
@@ -11,6 +12,7 @@ const PortfolioContainer = () => {
       <Header />
       <Hero />
       <About />
+      <Experience />
       {/* <Projects /> */}
       {/* <Contact /> */}
     </main>
