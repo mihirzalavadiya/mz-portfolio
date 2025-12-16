@@ -1,134 +1,164 @@
-'use client'; // 👈 Ye line sabse zaruri hai kyunki hum hooks use kar rahe hain
+'use client';
 
 import Image from 'next/image';
 import Link from 'next/link';
-import React, { useState } from 'react'; // useState import kiya
+import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { NAV_LINKS } from '@/utils/constants';
 import StaggeredText from './StaggeredText';
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
 
-  const toggleMenu = () => {
-    setIsOpen(!isOpen);
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+  }, [isOpen]);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 20);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const toggleMenu = () => setIsOpen(!isOpen);
+
+  const menuVariants = {
+    closed: {
+      opacity: 0,
+      y: '-100%',
+      transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] },
+    },
+    open: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] },
+    },
+  };
+
+  const linkVariants = {
+    closed: { opacity: 0, y: 20 },
+    open: (i: number) => ({
+      opacity: 1,
+      y: 0,
+      transition: { delay: 0.1 + i * 0.1, duration: 0.4, ease: 'easeOut' },
+    }),
   };
 
   return (
-    <header className="fixed top-0 left-0 w-full z-50 border-zinc-200 bg-white/80 backdrop-blur-md dark:bg-black/80 dark:border-zinc-800">
-      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6">
-        {/* Logo */}
-        <Link href="/" className="flex items-center gap-2">
-          <Image
-            className="dark:invert"
-            src="/logo.png"
-            alt="Logo"
-            width={70}
-            height={20}
-            priority
-          />
-        </Link>
-
-        {/* Desktop Navigation */}
-        <nav className="hidden md:block">
-          <ul className="flex items-center gap-8">
-            {NAV_LINKS.map((link) => (
-              <li key={link.label}>
-                <Link
-                  href={link.href}
-                  className="font-sans text-sm font-medium text-zinc-600 transition-colors hover:text-black dark:text-zinc-400 dark:hover:text-white"
-                >
-                  {link.label}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </nav>
-
-        {/* Desktop Button */}
-        <div className="hidden md:block">
-          <button className="group relative px-5 py-2 cursor-pointer rounded-full bg-primary font-outfit text-sm font-medium hover:opacity-90 text-white shadow-lg transition-all hover:bg-opacity-90">
-            <StaggeredText text="Hire Me" />
-          </button>
-        </div>
-
-        <div className="md:hidden">
-          <button
-            onClick={toggleMenu}
-            className="relative h-6 w-6 text-zinc-600 dark:text-zinc-400 focus:outline-none"
-            aria-label="Toggle Menu"
-          >
-            <span
-              className={`absolute left-0 top-0 transition-all duration-300 ${
-                isOpen
-                  ? 'rotate-90 opacity-0 scale-0'
-                  : 'rotate-0 opacity-100 scale-100'
-              }`}
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={1.5}
-                stroke="currentColor"
-                className="w-7 h-7"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
-                />
-              </svg>
-            </span>
-
-            <span
-              className={`absolute left-0 top-0 transition-all duration-300 ${
-                isOpen
-                  ? 'rotate-0 opacity-100 scale-100'
-                  : '-rotate-90 opacity-0 scale-0'
-              }`}
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={1.5}
-                stroke="currentColor"
-                className="w-7 h-7"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M6 18L18 6M6 6l12 12"
-                />
-              </svg>
-            </span>
-          </button>
-        </div>
-      </div>
-
-      <div
-        className={`md:hidden overflow-hidden bg-white/95 backdrop-blur-xl border-b border-zinc-200 dark:bg-black/95 dark:border-zinc-800 transition-all duration-300 ease-in-out ${
-          isOpen ? 'max-h-screen opacity-100 py-6' : 'max-h-0 opacity-0 py-0'
+    <>
+      {/* 👇 Added 'motion.header' back for entrance animation */}
+      <motion.header
+        initial={{ y: -100, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+        className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
+          isScrolled || isOpen
+            ? 'bg-white/80 backdrop-blur-lg border-b border-zinc-200 dark:bg-black/80 dark:border-zinc-800'
+            : 'bg-transparent border-transparent py-4'
         }`}
       >
-        <div className="flex flex-col items-center gap-6 px-6">
-          {NAV_LINKS.map((link) => (
-            <Link
-              key={link.label}
-              href={link.href}
-              onClick={() => setIsOpen(false)}
-              className="font-sans text-lg font-medium text-zinc-600 hover:text-black dark:text-zinc-400 dark:hover:text-white"
-            >
-              {link.label}
-            </Link>
-          ))}
+        <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6">
+          <Link href="/" className="flex items-center gap-2 z-50">
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+              <Image
+                className="dark:invert"
+                src="/logo.png"
+                alt="Logo"
+                width={isScrolled ? 60 : 70}
+                height={20}
+                priority
+              />
+            </motion.div>
+          </Link>
 
-          <button className="group relative px-5 py-2 cursor-pointer rounded-full bg-primary font-outfit text-sm font-medium hover:opacity-90 text-white shadow-lg transition-all hover:bg-opacity-90">
-            <StaggeredText text="Hire Me" />
+          <nav className="hidden md:block">
+            <ul className="flex items-center gap-8">
+              {NAV_LINKS.map((link) => (
+                <li key={link.label}>
+                  <Link
+                    href={link.href}
+                    className="relative font-sans text-sm font-medium text-zinc-600 transition-colors hover:text-black dark:text-zinc-400 dark:hover:text-white group"
+                  >
+                    {link.label}
+                    <span className="absolute -bottom-1 left-0 w-0 h-[2px] bg-primary transition-all duration-300 group-hover:w-full"></span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
+
+          <div className="hidden md:block">
+            <Link href="#contact">
+              <button className="group relative px-6 py-2.5 cursor-pointer rounded-full bg-primary font-outfit text-sm font-medium text-white shadow-lg transition-all hover:bg-opacity-90 hover:scale-105 active:scale-95">
+                <StaggeredText text="Hire Me" />
+              </button>
+            </Link>
+          </div>
+
+          <button
+            onClick={toggleMenu}
+            className="relative z-50 h-10 w-10 flex items-center justify-center rounded-full bg-zinc-100 dark:bg-zinc-800 md:hidden focus:outline-none shadow-sm"
+          >
+            <div className="relative w-5 h-4 flex flex-col justify-between">
+              <motion.span
+                animate={isOpen ? { rotate: 45, y: 7 } : { rotate: 0, y: 0 }}
+                className="block h-[2px] w-full bg-zinc-900 dark:bg-white rounded-full origin-center transition-all duration-300"
+              />
+              <motion.span
+                animate={isOpen ? { opacity: 0 } : { opacity: 1 }}
+                className="block h-[2px] w-full bg-zinc-900 dark:bg-white rounded-full transition-all duration-300"
+              />
+              <motion.span
+                animate={isOpen ? { rotate: -45, y: -7 } : { rotate: 0, y: 0 }}
+                className="block h-[2px] w-full bg-zinc-900 dark:bg-white rounded-full origin-center transition-all duration-300"
+              />
+            </div>
           </button>
         </div>
-      </div>
-    </header>
+      </motion.header>
+
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial="closed"
+            animate="open"
+            exit="closed"
+            variants={menuVariants}
+            className="fixed inset-0 z-40 flex flex-col items-center justify-center bg-white dark:bg-black md:hidden"
+          >
+            <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px] opacity-40"></div>
+
+            <nav className="flex flex-col items-center gap-8 z-10">
+              {NAV_LINKS.map((link, i) => (
+                <motion.div custom={i} variants={linkVariants} key={link.label}>
+                  <Link
+                    href={link.href}
+                    onClick={() => setIsOpen(false)}
+                    className="font-outfit text-3xl font-bold text-zinc-900 dark:text-white hover:text-primary transition-colors"
+                  >
+                    {link.label}
+                  </Link>
+                </motion.div>
+              ))}
+              <motion.div custom={4} variants={linkVariants}>
+                <Link href="#contact" onClick={() => setIsOpen(false)}>
+                  <button className="mt-4 rounded-full bg-primary px-10 py-4 font-outfit text-xl font-medium text-white shadow-xl shadow-primary/30 transition-transform active:scale-95">
+                    Hire Me
+                  </button>
+                </Link>
+              </motion.div>
+            </nav>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
   );
 };
 
