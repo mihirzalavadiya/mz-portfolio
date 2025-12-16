@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { motion } from 'framer-motion';
+import { motion, Variants } from 'framer-motion'; // 👈 1. Variants Import kiya
 import { ABOUT_CONTENT } from '@/utils/constants';
 
 const About = () => {
@@ -15,7 +15,8 @@ const About = () => {
   } = ABOUT_CONTENT;
 
   // --- Animation Variants ---
-  const fadeInUp = {
+  // 👇 2. Type ': Variants' add kiya taaki TypeScript error na de
+  const fadeInUp: Variants = {
     hidden: { opacity: 0, y: 40 },
     visible: {
       opacity: 1,
@@ -24,7 +25,8 @@ const About = () => {
     },
   };
 
-  const staggerContainer = {
+  // 👇 3. Isme bhi type add kar diya safety ke liye
+  const staggerContainer: Variants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
@@ -50,7 +52,7 @@ const About = () => {
           opacity: [0.03, 0.08, 0.03],
         }}
         transition={{
-          duration: 10, // Bahut slow aur smooth
+          duration: 10,
           repeat: Infinity,
           ease: 'easeInOut',
         }}
@@ -89,63 +91,80 @@ const About = () => {
             className="relative flex justify-center order-2 md:order-1"
           >
             <motion.div
-              whileHover={{ scale: 1.02, rotate: 0 }}
+              whileHover={{ rotate: -2, scale: 1.02 }}
               initial={{ rotate: 3 }}
               transition={{ type: 'spring', stiffness: 300 }}
-              className="relative w-full max-w-sm aspect-square rounded-2xl bg-white dark:bg-black border border-zinc-200 dark:border-zinc-800 p-8 shadow-2xl"
+              className="relative w-full max-w-sm aspect-square shrink-0"
             >
-              {/* Decorative Header */}
-              <div className="flex gap-2 mb-8">
-                <div className="h-3 w-3 rounded-full bg-red-500 shadow-sm"></div>
-                <div className="h-3 w-3 rounded-full bg-yellow-500 shadow-sm"></div>
-                <div className="h-3 w-3 rounded-full bg-green-500 shadow-sm"></div>
-              </div>
+              {/* Gradient Border/Frame */}
+              <div className="absolute inset-0 rounded-[40px] bg-gradient-to-tr from-primary to-purple-400 p-1 shadow-2xl rotate-3 opacity-60"></div>
 
-              {/* Code Content */}
-              <div className="space-y-4 font-mono text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">
-                <p>
-                  <span className="text-primary font-bold">const</span>{' '}
-                  <span className="text-yellow-600 dark:text-yellow-400">
-                    developer
-                  </span>{' '}
-                  = <span className="text-zinc-400">{`{`}</span>
-                </p>
-                <div className="pl-6 space-y-3 border-l-2 border-zinc-100 dark:border-zinc-800 ml-1">
-                  <p>
-                    name:{' '}
-                    <span className="text-green-600 dark:text-green-400 font-medium">
-                      "{devCard.name}"
-                    </span>
-                    ,
-                  </p>
-                  <p>
-                    role:{' '}
-                    <span className="text-green-600 dark:text-green-400 font-medium">
-                      "{devCard.role}"
-                    </span>
-                    ,
-                  </p>
-                  <p>
-                    location:{' '}
-                    <span className="text-green-600 dark:text-green-400 font-medium">
-                      "{devCard.location}"
-                    </span>
-                    ,
-                  </p>
-                  <p>
-                    status:{' '}
-                    <span className="text-green-600 dark:text-green-400 font-medium">
-                      "{devCard.status}"
-                    </span>
-                  </p>
+              {/* Main Card Container */}
+              <div className="relative h-full w-full overflow-hidden rounded-[38px] bg-zinc-100 dark:bg-zinc-900 border border-white/20 shadow-inner p-8 flex flex-col justify-center">
+                {/* Dot Pattern */}
+                <div
+                  className="absolute inset-0 opacity-20 pointer-events-none"
+                  style={{
+                    backgroundImage:
+                      'radial-gradient(#5f2ff8 1px, transparent 1px)',
+                    backgroundSize: '20px 20px',
+                  }}
+                ></div>
+
+                {/* Content */}
+                <div className="relative z-10">
+                  <div className="flex gap-2 mb-8">
+                    <div className="h-3 w-3 rounded-full bg-red-500 shadow-sm"></div>
+                    <div className="h-3 w-3 rounded-full bg-yellow-500 shadow-sm"></div>
+                    <div className="h-3 w-3 rounded-full bg-green-500 shadow-sm"></div>
+                  </div>
+
+                  <div className="space-y-4 font-mono text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">
+                    <p>
+                      <span className="text-primary font-bold">const</span>{' '}
+                      <span className="text-yellow-600 dark:text-yellow-400">
+                        developer
+                      </span>{' '}
+                      = <span className="text-zinc-400">{`{`}</span>
+                    </p>
+                    <div className="pl-6 space-y-3 border-l-2 border-zinc-200 dark:border-zinc-800 ml-1">
+                      <p>
+                        name:{' '}
+                        <span className="text-green-600 dark:text-green-400 font-medium">
+                          "{devCard.name}"
+                        </span>
+                        ,
+                      </p>
+                      <p>
+                        role:{' '}
+                        <span className="text-green-600 dark:text-green-400 font-medium">
+                          "{devCard.role}"
+                        </span>
+                        ,
+                      </p>
+                      <p>
+                        location:{' '}
+                        <span className="text-green-600 dark:text-green-400 font-medium">
+                          "{devCard.location}"
+                        </span>
+                        ,
+                      </p>
+                      <p>
+                        status:{' '}
+                        <span className="text-green-600 dark:text-green-400 font-medium">
+                          "{devCard.status}"
+                        </span>
+                      </p>
+                    </div>
+                    <p>
+                      <span className="text-zinc-400">{`}`}</span>;
+                    </p>
+                  </div>
                 </div>
-                <p>
-                  <span className="text-zinc-400">{`}`}</span>;
-                </p>
               </div>
 
-              {/* Decorative Background Blob behind card */}
-              <div className="absolute -z-10 top-10 -left-10 w-full h-full bg-primary/10 rounded-3xl blur-3xl"></div>
+              {/* Decorative Blur Circle behind */}
+              <div className="absolute -z-10 top-10 -left-10 w-full h-full bg-primary/20 rounded-3xl blur-3xl"></div>
             </motion.div>
           </motion.div>
 
@@ -196,7 +215,6 @@ const About = () => {
                 {skills.map((skill, index) => (
                   <motion.span
                     key={skill}
-                    // Custom stagger logic directly here
                     initial={{ opacity: 0, scale: 0.8 }}
                     whileInView={{ opacity: 1, scale: 1 }}
                     transition={{ delay: index * 0.05, type: 'spring' }}
