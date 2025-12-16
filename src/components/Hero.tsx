@@ -131,6 +131,7 @@ const Hero = () => {
               <motion.div
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
+                className="mb-3"
               >
                 <Link
                   href="#projects"
@@ -157,6 +158,7 @@ const Hero = () => {
               <motion.div
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
+                className="mb-3"
               >
                 <Link
                   href="#contact"
@@ -198,7 +200,7 @@ const Hero = () => {
                 {/* Text Placeholder */}
                 <span className="text-zinc-400 font-outfit text-xl font-bold relative z-10 flex flex-col items-center gap-2">
                   <Image
-                    className="dark:invert"
+                    className=""
                     src="/person2.png"
                     alt="Logo"
                     width={470}

@@ -116,7 +116,7 @@ const Header = () => {
           <Link href="/" className="flex items-center gap-2 z-50">
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
               <Image
-                className="dark:invert"
+                className=""
                 src="/logo.png"
                 alt="Logo"
                 width={isScrolled ? 60 : 70}
