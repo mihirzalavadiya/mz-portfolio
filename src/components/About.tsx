@@ -14,8 +14,6 @@ const About = () => {
     devCard,
   } = ABOUT_CONTENT;
 
-  // --- Animation Variants ---
-  // 👇 2. Type ': Variants' add kiya taaki TypeScript error na de
   const fadeInUp: Variants = {
     hidden: { opacity: 0, y: 40 },
     visible: {
@@ -25,7 +23,6 @@ const About = () => {
     },
   };
 
-  // 👇 3. Isme bhi type add kar diya safety ke liye
   const staggerContainer: Variants = {
     hidden: { opacity: 0 },
     visible: {

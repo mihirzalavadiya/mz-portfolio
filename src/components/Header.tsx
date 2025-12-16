@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import React, { useState, useEffect, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, Variants } from 'framer-motion';
 import { NAV_LINKS } from '@/utils/constants';
 import StaggeredText from './StaggeredText';
 
@@ -12,7 +12,6 @@ const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState('');
 
-  // State to track if scroll is triggered by a click
   const [isClickScrolling, setIsClickScrolling] = useState(false);
   const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -32,7 +31,6 @@ const Header = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Intersection Observer Logic
   useEffect(() => {
     const observerOptions = {
       root: null,
@@ -41,7 +39,6 @@ const Header = () => {
     };
 
     const observerCallback = (entries: IntersectionObserverEntry[]) => {
-      // Check: Agar click se scroll ho raha hai, to update mat karo
       if (isClickScrolling) return;
 
       entries.forEach((entry) => {
@@ -63,33 +60,25 @@ const Header = () => {
     });
 
     return () => observer.disconnect();
-  }, [isClickScrolling]); // Dependency added so it respects the lock
+  }, [isClickScrolling]);
 
-  // Handle Click Function (The Fix)
   const handleNavClick = (sectionId: string) => {
-    // 1. Menu close karo
     setIsOpen(false);
-
-    // 2. Turant active section set karo (Instant jump for line)
     setActiveSection(sectionId);
-
-    // 3. Observer ko LOCK kar do
     setIsClickScrolling(true);
 
-    // 4. Purana timeout clear karo agar user jaldi click kare
     if (scrollTimeoutRef.current) {
       clearTimeout(scrollTimeoutRef.current);
     }
 
-    // 5. Thodi der baad (jab scroll khatam ho jaye) Observer UNLOCK karo
     scrollTimeoutRef.current = setTimeout(() => {
       setIsClickScrolling(false);
-    }, 1000); // 1 second ka lock kaafi hota hai smooth scroll ke liye
+    }, 1000);
   };
 
   const toggleMenu = () => setIsOpen(!isOpen);
 
-  const menuVariants = {
+  const menuVariants: Variants = {
     closed: {
       opacity: 0,
       y: '-100%',
@@ -102,7 +91,7 @@ const Header = () => {
     },
   };
 
-  const linkVariants = {
+  const linkVariants: Variants = {
     closed: { opacity: 0, y: 20 },
     open: (i: number) => ({
       opacity: 1,
@@ -147,7 +136,6 @@ const Header = () => {
                   <li key={link.label}>
                     <Link
                       href={link.href}
-                      // 👇 Call the new handler
                       onClick={() => handleNavClick(sectionId)}
                       className={`relative font-sans text-sm font-medium transition-colors ${
                         isActive
@@ -233,7 +221,6 @@ const Header = () => {
                   >
                     <Link
                       href={link.href}
-                      // 👇 Call the new handler here too
                       onClick={() => handleNavClick(sectionId)}
                       className={`font-outfit text-3xl font-bold transition-colors ${
                         isActive
