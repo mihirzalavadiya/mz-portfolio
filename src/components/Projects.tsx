@@ -27,7 +27,6 @@ const Projects = () => {
       {/* --- HEADER & BUTTONS --- */}
       <div className="container mx-auto px-6 relative z-10 mb-10">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
-          {/* Text Content */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -45,15 +44,13 @@ const Projects = () => {
             </p>
           </motion.div>
 
-          {/* Navigation Buttons (Desktop) with Long Arrows */}
+          {/* Navigation Buttons */}
           <div className="hidden md:flex gap-3">
-            {/* Left Button */}
             <button
               onClick={() => scroll('left')}
               className="p-3 rounded-full border-zinc-300 dark:border-zinc-700 hover:bg-zinc-200 dark:hover:bg-zinc-800 hover:border-zinc-400 dark:hover:border-zinc-600 transition-all text-zinc-600 dark:text-zinc-300 group"
               aria-label="Scroll Left"
             >
-              {/* Rotate 180 deg to point left */}
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -70,7 +67,6 @@ const Projects = () => {
               </svg>
             </button>
 
-            {/* Right Button */}
             <button
               onClick={() => scroll('right')}
               className="p-3 rounded-full border-zinc-300 dark:border-zinc-700 hover:bg-zinc-200 dark:hover:bg-zinc-800 hover:border-zinc-400 dark:hover:border-zinc-600 transition-all text-zinc-600 dark:text-zinc-300 group"
@@ -99,7 +95,7 @@ const Projects = () => {
       <div className="relative w-full">
         <div
           ref={scrollContainerRef}
-          className="flex gap-6 overflow-x-auto pb-12 px-6 md:px-[10vw] snap-x snap-mandatory scroll-smooth hide-scrollbar"
+          className="flex gap-6 overflow-x-auto pb-12 px-6 md:px-[10vw] snap-x snap-mandatory scroll-smooth [&::-webkit-scrollbar]:hidden"
           style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
         >
           {PROJECTS_DATA.map((project) => (
@@ -109,13 +105,6 @@ const Projects = () => {
           ))}
         </div>
       </div>
-
-      {/* CSS to hide Scrollbar */}
-      <style jsx global>{`
-        .hide-scrollbar::-webkit-scrollbar {
-          display: none;
-        }
-      `}</style>
     </section>
   );
 };
