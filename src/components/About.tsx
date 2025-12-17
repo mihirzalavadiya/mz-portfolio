@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { motion, Variants } from 'framer-motion'; // 👈 1. Variants Import kiya
+import { motion, Variants } from 'framer-motion';
 import { ABOUT_CONTENT } from '@/utils/constants';
 
 const About = () => {
@@ -36,10 +36,8 @@ const About = () => {
       id="about"
       className="relative min-h-[90vh] py-24 md:py-32 flex items-center bg-zinc-50 dark:bg-zinc-900/50 overflow-hidden"
     >
-      {/* Background Pattern (Grid) */}
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]"></div>
 
-      {/* NEW: Animated Floating Code Symbol </> (Top Right) */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{
@@ -48,17 +46,12 @@ const About = () => {
           scale: [1, 1.05, 1],
           opacity: [0.03, 0.08, 0.03],
         }}
-        transition={{
-          duration: 10,
-          repeat: Infinity,
-          ease: 'easeInOut',
-        }}
+        transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut' }}
         className="absolute -top-10 -right-10 md:top-20 md:right-20 text-[10rem] md:text-[18rem] font-black font-mono text-primary select-none pointer-events-none z-0"
       >
         &lt;/&gt;
       </motion.div>
 
-      {/* NEW: Animated Floating Braces { } (Bottom Left - For Balance) */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{
@@ -78,14 +71,13 @@ const About = () => {
       </motion.div>
 
       <div className="container mx-auto px-6 relative z-10">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-20 items-center">
-          {/* --- LEFT SIDE: Developer Card (Interactive) --- */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
           <motion.div
             initial={{ opacity: 0, x: -50, rotate: -5 }}
             whileInView={{ opacity: 1, x: 0, rotate: 0 }}
             viewport={{ once: true, margin: '-100px' }}
             transition={{ duration: 0.8, ease: 'backOut' }}
-            className="relative flex justify-center order-2 md:order-1"
+            className="relative flex justify-center order-2 lg:order-1"
           >
             <motion.div
               whileHover={{ rotate: -2, scale: 1.02 }}
@@ -93,12 +85,9 @@ const About = () => {
               transition={{ type: 'spring', stiffness: 300 }}
               className="relative w-full max-w-sm aspect-square shrink-0"
             >
-              {/* Gradient Border/Frame */}
               <div className="absolute inset-0 rounded-[40px] bg-gradient-to-tr from-primary to-purple-400 p-1 shadow-2xl rotate-3 opacity-60"></div>
 
-              {/* Main Card Container */}
               <div className="relative h-full w-full overflow-hidden rounded-[38px] bg-zinc-100 dark:bg-zinc-900 border border-white/20 shadow-inner p-8 flex flex-col justify-center">
-                {/* Dot Pattern */}
                 <div
                   className="absolute inset-0 opacity-20 pointer-events-none"
                   style={{
@@ -108,7 +97,6 @@ const About = () => {
                   }}
                 ></div>
 
-                {/* Content */}
                 <div className="relative z-10">
                   <div className="flex gap-2 mb-8">
                     <div className="h-3 w-3 rounded-full bg-red-500 shadow-sm"></div>
@@ -160,27 +148,23 @@ const About = () => {
                 </div>
               </div>
 
-              {/* Decorative Blur Circle behind */}
               <div className="absolute -z-10 top-10 -left-10 w-full h-full bg-primary/20 rounded-3xl blur-3xl"></div>
             </motion.div>
           </motion.div>
 
-          {/* --- RIGHT SIDE: Text Content --- */}
           <motion.div
             variants={staggerContainer}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: '-100px' }}
-            className="order-1 md:order-2 space-y-8"
+            className="order-1 lg:order-2 space-y-8"
           >
-            {/* Badge */}
             <motion.div variants={fadeInUp}>
               <h2 className="inline-block text-sm font-bold font-sans uppercase tracking-widest text-primary bg-primary/10 px-3 py-1 rounded-md">
                 {sectionTitle}
               </h2>
             </motion.div>
 
-            {/* Headline */}
             <motion.h3
               variants={fadeInUp}
               className="text-3xl md:text-5xl font-outfit font-bold text-zinc-900 dark:text-zinc-100 leading-tight"
@@ -188,7 +172,6 @@ const About = () => {
               {headline}
             </motion.h3>
 
-            {/* Paragraphs */}
             <div className="space-y-4">
               {description.map((paragraph, index) => (
                 <motion.p
@@ -201,7 +184,6 @@ const About = () => {
               ))}
             </div>
 
-            {/* Tech Stack Chips */}
             <motion.div variants={fadeInUp} className="pt-4">
               <h4 className="font-outfit font-semibold text-zinc-900 dark:text-zinc-100 mb-6 flex items-center gap-2">
                 <span className="w-8 h-[2px] bg-primary"></span>

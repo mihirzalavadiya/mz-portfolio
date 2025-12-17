@@ -8,7 +8,6 @@ import ProjectCard from './ProjectCard';
 const Projects = () => {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
-  // Scroll Handler
   const scroll = (direction: 'left' | 'right') => {
     if (scrollContainerRef.current) {
       const { current } = scrollContainerRef;
@@ -20,12 +19,10 @@ const Projects = () => {
   return (
     <section
       id="projects"
-      className="relative min-h-[80vh] py-20 bg-zinc-50 dark:bg-zinc-900/50 overflow-hidden flex flex-col justify-center"
+      className="relative py-12 md:py-20 bg-zinc-50 dark:bg-zinc-900/50 overflow-hidden flex flex-col justify-center"
     >
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]"></div>
-
-      {/* --- HEADER & BUTTONS --- */}
-      <div className="container mx-auto px-6 relative z-10 mb-10">
+      <div className="container mx-auto px-6 relative z-10 mb-8 md:mb-12">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -44,7 +41,6 @@ const Projects = () => {
             </p>
           </motion.div>
 
-          {/* Navigation Buttons */}
           <div className="hidden md:flex gap-3">
             <button
               onClick={() => scroll('left')}
@@ -91,11 +87,10 @@ const Projects = () => {
         </div>
       </div>
 
-      {/* --- SCROLLABLE CONTAINER --- */}
       <div className="relative w-full">
         <div
           ref={scrollContainerRef}
-          className="flex gap-6 overflow-x-auto pb-12 px-6 md:px-[10vw] snap-x snap-mandatory scroll-smooth [&::-webkit-scrollbar]:hidden"
+          className="flex gap-6 overflow-x-auto pb-8 px-6 md:px-[10vw] snap-x snap-mandatory scroll-smooth [&::-webkit-scrollbar]:hidden"
           style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
         >
           {PROJECTS_DATA.map((project) => (

@@ -27,9 +27,9 @@ const Hero = () => {
   return (
     <section
       id="home"
-      className="relative flex min-h-screen items-center justify-center pt-20 overflow-hidden bg-white dark:bg-black"
+      className="relative flex min-h-screen items-center justify-center pt-28 pb-20 overflow-hidden bg-white dark:bg-black"
     >
-      {/* 1. Background Grid Pattern (Texture) */}
+      {/* 1. Background Grid Pattern */}
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]"></div>
 
       {/* 2. Floating Background Blob */}
@@ -43,16 +43,16 @@ const Hero = () => {
         className="absolute top-1/2 left-1/2 -z-10 h-[600px] w-[600px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary blur-[120px] opacity-20 dark:opacity-30"
       ></motion.div>
 
-      {/* 3. Floating Geometric Shapes (Decorative) */}
+      {/* 3. Floating Geometric Shapes */}
       <motion.div
         animate={{ y: [0, -20, 0] }}
         transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
-        className="absolute top-20 right-[10%] w-12 h-12 rounded-full border-4 border-primary/10 hidden md:block"
+        className="absolute top-20 right-[10%] w-12 h-12 rounded-full border-4 border-primary/10 hidden lg:block"
       />
       <motion.div
         animate={{ y: [0, 30, 0] }}
         transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
-        className="absolute bottom-20 left-[10%] w-16 h-16 rounded-full bg-primary/5 hidden md:block"
+        className="absolute bottom-20 left-[10%] w-16 h-16 rounded-full bg-primary/5 hidden lg:block"
       />
 
       <div className="container mx-auto px-6 relative z-10">
@@ -60,10 +60,12 @@ const Hero = () => {
           variants={staggerContainer}
           initial="hidden"
           animate="visible"
-          className="grid grid-cols-1 gap-12 items-center md:grid-cols-2"
+          // 👇 FIX 1: 'md:grid-cols-2' -> 'lg:grid-cols-2' (Tablet pe ab 1 column rahega, Laptop pe 2)
+          className="grid grid-cols-1 gap-12 lg:gap-8 items-center lg:grid-cols-2"
         >
           {/* --- LEFT SIDE: TEXT CONTENT --- */}
-          <div className="flex flex-col items-center text-center md:items-start md:text-left space-y-8">
+          {/* 👇 FIX 2: Text alignment 'lg' se control hoga. Tablet pe center rahega. */}
+          <div className="flex flex-col items-center text-center lg:items-start lg:text-left space-y-8 order-2 lg:order-1">
             {/* Greeting Badge */}
             <motion.div variants={fadeInUp}>
               <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/5 border border-primary/10 text-primary font-outfit text-sm font-semibold tracking-wide shadow-sm">
@@ -78,9 +80,9 @@ const Hero = () => {
             {/* Main Headline */}
             <motion.h1
               variants={fadeInUp}
-              className="font-outfit text-5xl font-bold tracking-tight text-zinc-900 sm:text-7xl dark:text-zinc-100 leading-[1.1]"
+              className="font-outfit text-5xl font-bold tracking-tight text-zinc-900 sm:text-6xl lg:text-7xl dark:text-zinc-100 leading-[1.1]"
             >
-              Hi, I'm <br className="md:hidden" /> Mihir.
+              Hi, I'm <br className="lg:hidden" /> Mihir.
               <br />
               <span className="relative inline-block mt-2">
                 {/* Marker SVG Container */}
@@ -95,7 +97,7 @@ const Hero = () => {
                   </svg>
                 </div>
 
-                {/* Animation Overlay (White div that slides away to reveal marker) */}
+                {/* Animation Overlay */}
                 <motion.div
                   initial={{ scaleX: 1 }}
                   animate={{ scaleX: 0 }}
@@ -104,7 +106,7 @@ const Hero = () => {
                   className="absolute inset-0 bg-white dark:bg-black -z-10"
                 />
 
-                <span className="relative text-5xl z-10 text-primary px-2">
+                <span className="relative text-5xl sm:text-6xl lg:text-7xl z-10 text-primary px-2">
                   Frontend Dev.
                 </span>
               </span>
@@ -113,7 +115,7 @@ const Hero = () => {
             {/* Description */}
             <motion.p
               variants={fadeInUp}
-              className="max-w-lg text-lg md:text-xl text-zinc-500 dark:text-zinc-400 font-sans leading-relaxed"
+              className="max-w-lg text-lg text-zinc-500 dark:text-zinc-400 font-sans leading-relaxed"
             >
               Building{' '}
               <span className="text-zinc-900 dark:text-white font-medium">
@@ -126,7 +128,8 @@ const Hero = () => {
             {/* CTA Buttons */}
             <motion.div
               variants={fadeInUp}
-              className="flex flex-wrap items-center justify-center md:justify-start gap-4 pt-2"
+              // 👇 FIX 3: Buttons alignment responsive fix
+              className="flex flex-wrap items-center justify-center lg:justify-start gap-4 pt-2"
             >
               <motion.div
                 whileHover={{ scale: 1.05 }}
@@ -171,16 +174,18 @@ const Hero = () => {
           </div>
 
           {/* --- RIGHT SIDE: IMAGE --- */}
+          {/* 👇 FIX 4: Order fix. Mobile/Tablet pe Image upar (order-1), Text niche (order-2) */}
           <motion.div
             initial={{ opacity: 0, x: 50, rotate: 5 }}
             animate={{ opacity: 1, x: 0, rotate: 0 }}
             transition={{ duration: 1, delay: 1.4, type: 'spring' }}
-            className="flex justify-center md:justify-end relative"
+            className="flex justify-center lg:justify-end relative order-1 lg:order-2"
           >
             <motion.div
               whileHover={{ rotate: -2, scale: 1.02 }}
               transition={{ type: 'spring', stiffness: 300 }}
-              className="relative h-[380px] w-[380px] sm:h-[480px] sm:w-[480px] shrink-0"
+              // 👇 FIX 5: Image Sizes Fix (Mobile pe 280px, Tablet pe 380px, Desktop pe 480px)
+              className="relative h-[280px] w-[280px] sm:h-[380px] sm:w-[380px] lg:h-[480px] lg:w-[480px] shrink-0"
             >
               {/* Image Border/Frame */}
               <div className="absolute inset-0 rounded-[40px] bg-gradient-to-tr from-primary to-purple-400 p-1 shadow-2xl rotate-3 opacity-60"></div>
@@ -197,14 +202,13 @@ const Hero = () => {
                   }}
                 ></div>
 
-                {/* Text Placeholder */}
-                <span className="text-zinc-400 font-outfit text-xl font-bold relative z-10 flex flex-col items-center gap-2">
+                {/* Person Image */}
+                <span className="relative z-10 w-full h-full">
                   <Image
-                    className=""
+                    className="object-cover object-bottom"
                     src="/person2.png"
-                    alt="Logo"
-                    width={470}
-                    height={420}
+                    alt="Mihir Zalavadiya"
+                    fill
                     priority
                   />
                 </span>
@@ -221,7 +225,8 @@ const Hero = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 2.5, duration: 1 }}
-          className="absolute bottom-10 left-1/2 -translate-x-1/2 hidden md:flex flex-col items-center gap-2"
+          // Hide on small tablets to save space
+          className="absolute bottom-10 left-1/2 -translate-x-1/2 hidden lg:flex flex-col items-center gap-2"
         >
           <span className="text-xs font-medium text-zinc-400 uppercase tracking-widest">
             Scroll
