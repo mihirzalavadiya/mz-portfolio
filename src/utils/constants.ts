@@ -266,4 +266,26 @@ export const PROJECTS_DATA: ProjectItem[] = [
     overview:
       'QR Generator was built to practice core JavaScript concepts and DOM manipulation. The focus was on creating a fast, lightweight utility with a simple user interface that allows users to generate QR codes effortlessly.',
   },
+  {
+    id: 8,
+    title: 'Cart Saver Extension',
+    category: 'Browser Extension',
+    description:
+      'A universal wishlist assistant that saves products from Amazon, Flipkart, and Myntra into a single dashboard using smart hybrid scraping.',
+    image: '/projects/cart_saver.png',
+    techStack: ['React', 'TypeScript', 'TailwindCSS', 'Vite', 'Chrome API'],
+    liveUrl:
+      'https://github.com/mihirzalavadiya/cart-saver-extention/blob/main/README.md',
+    githubUrl: 'https://github.com/mihirzalavadiya/cart-saver-extention',
+    keyFeatures: [
+      'Universal Scraping (Amazon, Flipkart, Myntra, etc.)',
+      'Smart Fallback Logic (JSON-LD & Meta Tags)',
+      'Persistent Local Storage using Zustand',
+      'Modern Glassmorphism UI with TailwindCSS',
+      'One-click direct access to product pages',
+    ],
+    overview:
+      'Cart Saver was built to solve the fragmented shopping experience by unifying wishlists from multiple e-commerce platforms. It utilizes a robust hybrid scraping engine that switches between CSS selectors and JSON-LD structured data to ensure accurate price and image detection. The project leverages React for a dynamic UI and Chrome Storage/Zustand for persistent data management, handling real-time DOM manipulation efficiently.',
+    gallery: ['/projects/cart_saver_1.png', '/projects/cart_saver_2.png'],
+  },
 ];
