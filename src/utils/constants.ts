@@ -209,6 +209,44 @@ export const PROJECTS_DATA: ProjectItem[] = [
   },
   {
     id: 5,
+    title: 'DevToolBox',
+    category: 'Developer Productivity Suite',
+    description:
+      'A high-performance, all-in-one local-first productivity suite designed to streamline developer workflows with essential utilities in a single, minimal interface.',
+    image: '/projects/dev_toolbox.png',
+    techStack: [
+      'Next.js 16',
+      'TypeScript',
+      'Tailwind CSS',
+      'Shadcn UI',
+      'Monaco Editor',
+      'Lucide React',
+      'Next Themes',
+      'Sonner',
+    ],
+    liveUrl: 'https://dev-toolbox-mz.vercel.app/',
+    githubUrl: 'https://github.com/mihirzalavadiya/dev-toolbox',
+    keyFeatures: [
+      'All-in-one developer utility hub (JSON, JWT, API, Regex, Base64, UUID)',
+      'High-performance JSON formatter and validator',
+      'JWT decoding and debugging with real-time feedback',
+      'Postman-like API tester with request configuration',
+      'Local Snippet Vault with persistent browser storage',
+      'Monaco Editor integration for VS Code–like editing experience',
+      'Local-first architecture with no external data dependency',
+      'Dark / Light theme support with a sleek violet UI',
+      'Keyboard-friendly and distraction-free UX',
+    ],
+    overview:
+      'DevToolBox is built as a local-first developer productivity platform focused on speed, reliability, and minimalism. It removes the need for multiple external tools by consolidating essential debugging and formatting utilities into a single workspace. The system follows a modular architecture, allowing new tools to be added seamlessly while maintaining high performance and a consistent user experience.',
+    gallery: [
+      '/projects/dev_toolbox_1.png',
+      '/projects/dev_toolbox_2.png',
+      '/projects/dev_toolbox_3.png',
+    ],
+  },
+  {
+    id: 6,
     title: 'GBC (Goal Based Calculator)',
     category: 'FinTech',
     description:
@@ -228,7 +266,7 @@ export const PROJECTS_DATA: ProjectItem[] = [
     gallery: ['/projects/gbc_1.png', '/projects/gbc_2.png'],
   },
   {
-    id: 6,
+    id: 7,
     title: 'Typing Speed Test',
     category: 'Utility',
     description:
@@ -248,7 +286,7 @@ export const PROJECTS_DATA: ProjectItem[] = [
     gallery: ['/projects/typing_speed_test_1.png'],
   },
   {
-    id: 7,
+    id: 8,
     title: 'QR Generator',
     category: 'Utility',
     description:
@@ -267,7 +305,7 @@ export const PROJECTS_DATA: ProjectItem[] = [
       'QR Generator was built to practice core JavaScript concepts and DOM manipulation. The focus was on creating a fast, lightweight utility with a simple user interface that allows users to generate QR codes effortlessly.',
   },
   {
-    id: 8,
+    id: 9,
     title: 'Cart Saver Extension',
     category: 'Browser Extension',
     description:
